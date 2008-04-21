@@ -13,6 +13,9 @@
       #\0))
 
 (defun radix-sort (list)
+  "Radix Sort using Least Significant Digit. Timesink due to string conversion crap
+  unfortunately, it's how Bill did it, so I'm not sure I want to go back and change
+  everything and make him do the same thing. Ugly"
   (let* ((string-list (mapcar #'(lambda (x) (reverse (write-to-string x))) list))
 	 (longest (loop for x in string-list maximize (length x))))
     (dotimes (i longest)
@@ -21,6 +24,8 @@
     (mapcar #'(lambda (x) (parse-integer (reverse x))) string-list)))
 
 (defun quicksort (list)
+  "Your typical, pretty quicksort in X-functional language. Pretty much rules
+  thanks to remove-if-not."
   (when list
     (let ((pivot (car list)))
       (append
@@ -29,6 +34,7 @@
        (quicksort (remove-if-not #'(lambda (x) (> x pivot)) (cdr list)))))))
 
 (defun mergesort (list)
+  "Mergesort, also hella pretty mostly due to the split helper function"
   (if (<= (length list) 1)
       list
       (multiple-value-bind (left right) (split list)
