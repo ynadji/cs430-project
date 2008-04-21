@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// ballz
+
 #define MAX 10
 #define MAXLENGTH 100
 
