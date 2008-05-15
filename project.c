@@ -15,9 +15,10 @@ void print_arr(int arr[], int len, char *arr_name);
 int int_cmp(const void *a, const void *b);
 void quicksort(int a[], int lo, int hi);
 double get_runtime(struct timeval *start, struct timeval *end);
-void print_results(double *quick, double *merge, double *radix, char *listname);
+void print_results(double *quick, double *merge, double *radix, double *bubble, char *listname);
 void rsort(int a[], int n);
 void mergesort_array(int a[], int size, int temp[]);
+void bubblesort(int a[], int size);
 
 int main()
 {
@@ -29,12 +30,14 @@ int main()
 	double qsort_time[NUM_TESTS];
 	double merge_time[NUM_TESTS];
 	double radix_time[NUM_TESTS];
+	double bubble_time[NUM_TESTS];
 
 	for (i = 0; i < NUM_TESTS; i++)
 	{
 		qsort_time[i] = 0;
 		merge_time[i] = 0;
 		radix_time[i] = 0;
+		bubble_time[i] = 0;
 	}
 
 	// list of 10
@@ -65,6 +68,13 @@ int main()
 
 		radix_time[0] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list10_1, sizeof(list10_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 10);
+		gettimeofday(&end, NULL);
+
+		bubble_time[0] += get_runtime(&start, &end);
+
 		// test #2
 		
 		memcpy(tmparr, list10_2, sizeof(list10_1));
@@ -87,6 +97,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[1] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list10_2, sizeof(list10_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 10);
+		gettimeofday(&end, NULL);
+
+		bubble_time[1] += get_runtime(&start, &end);
 
 		// test #3
 		
@@ -111,6 +128,13 @@ int main()
 
 		radix_time[2] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list10_3, sizeof(list10_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 10);
+		gettimeofday(&end, NULL);
+
+		bubble_time[2] += get_runtime(&start, &end);
+
 		// test #4
 		
 		memcpy(tmparr, list10_4, sizeof(list10_1));
@@ -133,6 +157,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[3] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list10_4, sizeof(list10_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 10);
+		gettimeofday(&end, NULL);
+
+		bubble_time[3] += get_runtime(&start, &end);
 
 		// test #5
 		
@@ -157,9 +188,16 @@ int main()
 
 		radix_time[4] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list10_5, sizeof(list10_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 10);
+		gettimeofday(&end, NULL);
+
+		bubble_time[4] += get_runtime(&start, &end);
+
 		free(tmparr);
 	}
-	print_results(qsort_time, merge_time, radix_time, "10");
+	print_results(qsort_time, merge_time, radix_time, bubble_time, "10");
 
 	// list of 100
 	for (i = 0; i < MAX_ITER; i++)
@@ -189,6 +227,13 @@ int main()
 
 		radix_time[0] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list100_1, sizeof(list100_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 100);
+		gettimeofday(&end, NULL);
+
+		bubble_time[0] += get_runtime(&start, &end);
+
 		// test #2
 		
 		memcpy(tmparr, list100_2, sizeof(list100_1));
@@ -211,6 +256,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[1] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list100_2, sizeof(list100_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 100);
+		gettimeofday(&end, NULL);
+
+		bubble_time[1] += get_runtime(&start, &end);
 
 		// test #3
 		
@@ -235,6 +287,13 @@ int main()
 
 		radix_time[2] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list100_3, sizeof(list100_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 100);
+		gettimeofday(&end, NULL);
+
+		bubble_time[2] += get_runtime(&start, &end);
+
 		// test #4
 		
 		memcpy(tmparr, list100_4, sizeof(list100_1));
@@ -257,6 +316,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[3] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list100_4, sizeof(list100_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 100);
+		gettimeofday(&end, NULL);
+
+		bubble_time[3] += get_runtime(&start, &end);
 
 		// test #5
 		
@@ -281,9 +347,16 @@ int main()
 
 		radix_time[4] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list100_5, sizeof(list100_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 100);
+		gettimeofday(&end, NULL);
+
+		bubble_time[4] += get_runtime(&start, &end);
+
 		free(tmparr);
 	}
-	print_results(qsort_time, merge_time, radix_time, "100");
+	print_results(qsort_time, merge_time, radix_time, bubble_time, "100");
 
 	// list of 1000
 	for (i = 0; i < MAX_ITER; i++)
@@ -313,6 +386,13 @@ int main()
 
 		radix_time[0] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list1000_1, sizeof(list1000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 1000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[0] += get_runtime(&start, &end);
+
 		// test #2
 		
 		memcpy(tmparr, list1000_2, sizeof(list1000_1));
@@ -335,6 +415,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[1] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list1000_2, sizeof(list1000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 1000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[1] += get_runtime(&start, &end);
 
 		// test #3
 		
@@ -359,6 +446,13 @@ int main()
 
 		radix_time[2] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list1000_3, sizeof(list1000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 1000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[2] += get_runtime(&start, &end);
+
 		// test #4
 		
 		memcpy(tmparr, list1000_4, sizeof(list1000_1));
@@ -381,6 +475,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[3] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list1000_4, sizeof(list1000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 1000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[3] += get_runtime(&start, &end);
 
 		// test #5
 		
@@ -405,9 +506,16 @@ int main()
 
 		radix_time[4] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list1000_5, sizeof(list1000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 1000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[4] += get_runtime(&start, &end);
+
 		free(tmparr);
 	}
-	print_results(qsort_time, merge_time, radix_time, "1000");
+	print_results(qsort_time, merge_time, radix_time, bubble_time, "1000");
 
 	// list of 5000
 	for (i = 0; i < MAX_ITER; i++)
@@ -437,6 +545,13 @@ int main()
 
 		radix_time[0] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list5000_1, sizeof(list5000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 5000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[0] += get_runtime(&start, &end);
+
 		// test #2
 		
 		memcpy(tmparr, list5000_2, sizeof(list5000_1));
@@ -459,6 +574,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[1] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list5000_2, sizeof(list5000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 5000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[1] += get_runtime(&start, &end);
 
 		// test #3
 		
@@ -483,6 +605,13 @@ int main()
 
 		radix_time[2] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list5000_3, sizeof(list5000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 5000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[2] += get_runtime(&start, &end);
+
 		// test #4
 		
 		memcpy(tmparr, list5000_4, sizeof(list5000_1));
@@ -505,6 +634,13 @@ int main()
 		gettimeofday(&end, NULL);
 
 		radix_time[3] += get_runtime(&start, &end);
+
+		memcpy(tmparr, list5000_4, sizeof(list5000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 5000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[3] += get_runtime(&start, &end);
 
 		// test #5
 		
@@ -529,10 +665,17 @@ int main()
 
 		radix_time[4] += get_runtime(&start, &end);
 
+		memcpy(tmparr, list5000_5, sizeof(list5000_1));
+		gettimeofday(&start, NULL);
+		bubblesort(tmparr, 5000);
+		gettimeofday(&end, NULL);
+
+		bubble_time[4] += get_runtime(&start, &end);
+
 		free(tmparr);
 	}
 
-	print_results(qsort_time, merge_time, radix_time, "5000");
+	print_results(qsort_time, merge_time, radix_time, bubble_time, "5000");
 
 	return 0;
 }
@@ -547,7 +690,7 @@ double get_runtime(struct timeval *start, struct timeval *end)
 	return total;
 }
 
-void print_results(double *quick, double *merge, double *radix, char *listname)
+void print_results(double *quick, double *merge, double *radix, double *bubble, char *listname)
 {
 	int i;
 	printf("List: %s\n", listname);
@@ -557,6 +700,7 @@ void print_results(double *quick, double *merge, double *radix, char *listname)
 		printf("Quicksort: %f\n", quick[i] / MAX_ITER);
 		printf("Mergesort: %f\n", merge[i] / MAX_ITER);
 		printf("Radixsort: %f\n", radix[i] / MAX_ITER);
+    printf("Bubblesort: %f\n", bubble[i] / MAX_ITER);
 	}
 }
 
@@ -629,6 +773,27 @@ void rsort(int a[], int n)
 			first_in_bucket[i]++;
 		}
 	}
+}
+
+void bubblesort(int a[], int size)
+{
+  int i,
+      j,
+      tmp;
+
+  for (i = 0; i < size - 1; i++)
+  {
+    for (j = i + 1; j < size; j++)
+    {
+      if (a[i] > a[j])
+      {
+        tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+      }
+    }
+  }
+  return;
 }
 
 void mergesort_array(int a[], int size, int temp[]) {

@@ -1,11 +1,10 @@
 (defpackage :cs430-project
-  (:use :cl))
+  (:use :cl)
+  (:export #:run-all-tests))
 
 (in-package :cs430-project)
 
-(defvar lst '(38 536 6345 8 91 103 1753))
-(defvar nlst (loop for x from 9999 downto 0 collect x))
-(defvar rlst (loop repeat 1000 collect (random 1000)))
+(load "/home/ynadji/cs430/lists.lisp")
 
 (defun schar-aux (string index)
   (if (> (length string) index)
@@ -49,3 +48,40 @@
      collect x into r
      do (incf y)
      finally (return (values l r))))
+
+(defun bubble-sort (list)
+  (loop for i from 0 to (- (length list) 2)
+     do (loop for j from (+ 1 i) to (- (length list) 1)
+	     do (when (> (nth i list) (nth j list)) (rotatef (nth i list) (nth j list)))))
+  list)
+	    
+
+(defun swap (list i j)
+  (let ((i-val (nth i list)))
+    (setf (nth i list) (nth j list))
+    (setf (nth j list) i-val)))
+
+(defun run-test (list sort)
+  (let ((start 0)
+	(end 0)
+	(sum 0))
+    (dotimes (i 3)
+      (setq start (get-internal-real-time))
+      (funcall sort list)
+      (setq end (get-internal-real-time))
+      (incf sum (- end start)))
+    (float (/ sum 3))))
+
+(defun run-all-tests ()
+  (loop for list-name in *test-lists*
+     for list = (eval list-name)
+     for qsort-time = (run-test list #'quicksort)
+     for merge-time = (run-test list #'mergesort)
+     for radix-time = (run-test list #'radix-sort)
+     for bubbl-time = (run-test list #'bubble-sort)
+     do (format t "Test Name: ~s~%~%Quicksort: ~d ms~%Mergesort: ~d ms~%Radixsort: ~d ms~%Bubblesort: ~d ms~%~%"
+		list-name
+		qsort-time
+		merge-time
+		radix-time
+		bubbl-time)))
