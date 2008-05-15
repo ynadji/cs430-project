@@ -4,7 +4,7 @@
 
 (in-package :cs430-project)
 
-(load "/home/ynadji/cs430/lists.lisp")
+(load "/Users/ynadji/Documents/Homework/cs430/project/lists.lisp")
 
 (defun schar-aux (string index)
   (if (> (length string) index)
