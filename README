@@ -1,0 +1,1 @@
+To compile all the code run 'make'. 'make run' runs all the tests. 'make LANG' runs the test for the specific language.

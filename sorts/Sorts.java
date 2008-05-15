@@ -83,8 +83,6 @@ public class Sorts {
 			return flat;
 		}
 		
-
-		
 		private void swap (int A[], int x, int y)
 		   {
 		      int temp = A[x];
@@ -92,29 +90,6 @@ public class Sorts {
 		      A[y] = temp;
 		   }
 
-		/*
-		   private int partition(int A[], int f, int l)
-		   {
-		      int pivot = A[f];
-		      int pp = f;
-		      while (f < l)
-		      {
-		         while (A[f] < pivot) f++;
-		         while (A[l] > pivot) l--;
-		         swap (A, f, l);
-		      }
-		      return f;
-		   }
-
-		   public int[] quicksort(int A[], int f, int l)
-		   {
-		      if (f >= l) return A;
-		      int pivot_index = partition(A, f, l);
-		      quicksort(A, f, pivot_index);
-		      return quicksort(A, pivot_index+1, l);
-		   }
-		  */
-		
 		public int[] quicksort(int[] arr)
 		{
 			LinkedList<Integer> lol = new LinkedList<Integer>();
